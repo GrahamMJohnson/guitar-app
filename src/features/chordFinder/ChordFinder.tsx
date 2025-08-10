@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { NOTES, CHORDS } from "./ChordData";
 
+//Breaking each chord into notes
 function getChordNotes(root: string, chordType: keyof typeof CHORDS) {
   const rootIndex = NOTES.indexOf(root);
   const intervals = CHORDS[chordType];
   return intervals.map(i => NOTES[(rootIndex + i) % NOTES.length]);
 }
 
+//Chord Finder tool
 export const ChordFinder = () => {
   const [root, setRoot] = useState("C");
   const [chordType, setChordType] = useState<keyof typeof CHORDS>("Major");
