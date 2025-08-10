@@ -1,0 +1,7 @@
+body {
+  background-color: #f7fafc; /* light gray */
+  color: #1a202c; /* dark text */
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+}
