@@ -7,6 +7,7 @@ const menuItems = [
   { name: "Chord Finder", path: "/chord-finder" },
   { name: "Tuner", path: "/tuner" },
   { name: "Metronome", path: "/metronome" },
+  { name: "Fretboard", path: "/fretboard"},
 ];
 
 //The menu containing buttons for each feature

@@ -15,6 +15,7 @@ const Home = () => (
 // Placeholder components for future features
 const Tuner = () => <div style={{ padding: 20 }}><h2>Tuner coming soon!</h2></div>;
 const Metronome = () => <div style={{ padding: 20 }}><h2>Metronome coming soon!</h2></div>;
+const Fretboard = () => <div style={{ padding: 20}}><h2>Fretboard coming soon!</h2></div>;
 
 //The menu displayed with the currently selected feature
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/chord-finder" element={<ChordFinder />} />
         <Route path="/tuner" element={<Tuner />} />
         <Route path="/metronome" element={<Metronome />} />
+        <Route path="/fretboard" element={<Fretboard />} />
       </Routes>
     </BrowserRouter>
   );
