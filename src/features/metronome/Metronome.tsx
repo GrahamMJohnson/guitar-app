@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 export default function Metronome() {
-  const [bpm, setBpm] = useState(60);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [beat, setBeat] = useState(false);
+  const [bpm, setBpm] = useState(60); //Beats per minute
+  const [isPlaying, setIsPlaying] = useState(false); //is metronome playing?
+  const [beat, setBeat] = useState(false); //play beat
 
   useEffect(() => {
     let interval: number;
