@@ -27,18 +27,18 @@ export const MainMenu = () => {
                 border: "none",
                 cursor: "pointer",
                 fontWeight: "bold",
-                backgroundColor: isActive ? "#4338CA" : "#4F46E5",
+                backgroundColor: isActive ? "#EF4444" : "#2563EB",
                 color: "white",
                 boxShadow: isActive
-                  ? "0 4px 8px rgba(67, 56, 202, 0.5)"
-                  : "0 2px 4px rgba(79, 70, 229, 0.4)",
+                  ? "0 4px 8px rgba(239, 68, 68, 0.5)"
+                  : "0 2px 4px rgba(37, 99, 235, 0.4)",
                 transition: "background-color 0.3s ease",
               }}
               onMouseEnter={e => {
-                if (!isActive) e.currentTarget.style.backgroundColor = "#3730A3";
+                if (!isActive) e.currentTarget.style.backgroundColor = "#1D4ED8";
               }}
               onMouseLeave={e => {
-                if (!isActive) e.currentTarget.style.backgroundColor = "#4F46E5";
+                if (!isActive) e.currentTarget.style.backgroundColor = "#2563EB";
               }}
             >
               {name}

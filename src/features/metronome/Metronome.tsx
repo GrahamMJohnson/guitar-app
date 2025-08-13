@@ -1,73 +1,96 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
-const Metronome: React.FC = () => {
-  const [bpm, setBpm] = useState(100);
+export default function Metronome() {
+  const [bpm, setBpm] = useState(60);
   const [isPlaying, setIsPlaying] = useState(false);
-  const intervalRef = useRef<number | null>(null);
+  const [beat, setBeat] = useState(false);
 
-  const playClick = () => {
-    const audioCtx = new AudioContext();
-    const oscillator = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
+  useEffect(() => {
+    let interval: number;
+    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
 
-    oscillator.type = "square";
-    oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime); // frequency in Hz
-    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    const playClick = (volume: number, frequency: number) => {
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.type = "square";
+      oscillator.frequency.value = frequency;
+      gainNode.gain.value = volume;
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
 
-    oscillator.start();
-    oscillator.stop(audioCtx.currentTime + 0.05); // short click
-  };
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.05); // 50ms click
+    };
 
-  const startMetronome = () => {
-    if (!isPlaying) {
-      playClick();
-      const interval = window.setInterval(playClick, (60 / bpm) * 1000);
-      intervalRef.current = interval;
-      setIsPlaying(true);
+    if (isPlaying) {
+      const msPerBeat = (60 / bpm) * 1000;
+
+      interval = window.setInterval(() => {
+        setBeat(true);
+        playClick(0.2, 1000); // main beat sound
+        setTimeout(() => setBeat(false), 100); // pulse off after 100ms
+      }, msPerBeat);
     }
-  };
 
-  const stopMetronome = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    setIsPlaying(false);
-  };
+    return () => clearInterval(interval);
+  }, [isPlaying, bpm]);
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4">
-      <h2 className="text-xl font-bold">Metronome</h2>
-      <label className="flex items-center gap-2">
-        BPM:
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        minHeight: "100vh",
+        justifyContent: "center",
+        backgroundColor: "white",
+        color: "black",
+        gap: "20px",
+      }}
+    >
+      <h2>Metronome</h2>
+
+      {/* Pulse circle */}
+      <div
+        style={{
+          width: "128px",
+          height: "128px",
+          borderRadius: "50%",
+          backgroundColor: beat ? "#EF4444" : "#F97316",
+          transform: beat ? "scale(1.5)" : "scale(1)",
+          transition: "all 0.15s ease",
+          margin: "20px 0",
+        }}
+      ></div>
+
+      {/* BPM slider */}
+      <div>
+        <label>BPM: {bpm}</label>
         <input
-          type="number"
+          type="range"
+          min="40"
+          max="200"
           value={bpm}
           onChange={(e) => setBpm(Number(e.target.value))}
-          className="border rounded p-1 w-20 text-center"
         />
-      </label>
-      <div className="flex gap-4">
-        <button
-          onClick={startMetronome}
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          disabled={isPlaying}
-        >
-          Start
-        </button>
-        <button
-          onClick={stopMetronome}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-          disabled={!isPlaying}
-        >
-          Stop
-        </button>
       </div>
+
+      {/* Start/Stop button */}
+      <button
+        onClick={() => setIsPlaying(!isPlaying)}
+        style={{
+          padding: "10px 20px",
+          marginTop: "10px",
+          cursor: "pointer",
+          backgroundColor: isPlaying ? "#EF4444" : "#10B981",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+        }}
+      >
+        {isPlaying ? "Stop" : "Start"}
+      </button>
     </div>
   );
-};
-
-export default Metronome;
+}
