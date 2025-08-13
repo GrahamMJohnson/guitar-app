@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { MainMenu } from "./components/MainMenu";
 import { ChordFinder } from "./features/chordFinder/ChordFinder";
+import Metronome from "./features/metronome/Metronome";
 
 //Home screen
 const Home = () => (
@@ -14,7 +15,7 @@ const Home = () => (
 
 // Placeholder components for future features
 const Tuner = () => <div style={{ padding: 20 }}><h2>Tuner coming soon!</h2></div>;
-const Metronome = () => <div style={{ padding: 20 }}><h2>Metronome coming soon!</h2></div>;
+//const Metronome = () => <div style={{ padding: 20 }}><h2>Metronome coming soon!</h2></div>;
 const Fretboard = () => <div style={{ padding: 20}}><h2>Fretboard coming soon!</h2></div>;
 
 //The menu displayed with the currently selected feature
